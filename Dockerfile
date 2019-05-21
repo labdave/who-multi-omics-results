@@ -25,5 +25,8 @@ RUN git clone https://github.com/labdave/who-multi-omics-results.git
 # add who-multi-omics-results repo to SYSPATH
 ENV PATH /who-multi-omics-results:$PATH
 
+# change the permission of the repo
+RUN chmod 777 -R /who-multi-omics-results
+
 # make the meta_analysis_CLI as default script to execute
 CMD ["meta_analysis_CLI.R"]
