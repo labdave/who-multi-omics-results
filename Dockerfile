@@ -21,7 +21,7 @@ RUN R --vanilla -e 'install.packages(c("optparse", "ggplot2", "jsonlite", "survi
 
 # clone who-multi-omics-results repo
 RUN git clone https://github.com/labdave/who-multi-omics-results.git &&\
-    chmod 775 -R /who-multi-omics-results
+    chmod -R 775 /who-multi-omics-results
 
 ENV PATH /who-multi-omics-results:$PATH
 
