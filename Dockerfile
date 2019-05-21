@@ -14,7 +14,7 @@ MAINTAINER DaveLab <lab.dave@gmail.com>
 
 # update the OS related packages
 RUN apt-get update -y &&\
-    apt-get install git
+    apt-get install git -y
 
 # install required dependencies for QCParser
 RUN R --vanilla -e 'install.packages(c("optparse", "ggplot2", "jsonlite", "survival"), repos="http://cran.us.r-project.org")'
