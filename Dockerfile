@@ -20,9 +20,13 @@ RUN apt-get update -y &&\
 RUN R --vanilla -e 'install.packages(c("optparse", "ggplot2", "jsonlite", "survival"), repos="http://cran.us.r-project.org")'
 
 # clone who-multi-omics-results repo
-RUN git clone https://github.com/labdave/who-multi-omics-results.git &&\
-    chmod -R 775 /who-multi-omics-results
+RUN git clone https://github.com/labdave/who-multi-omics-results.git
 
+# add who-multi-omics-results repo to SYSPATH
 ENV PATH /who-multi-omics-results:$PATH
 
+# change the permission of who-multi-omics-results repo
+RUN chmod -R /who-multi-omics-results
+
+# make the meta_analysis_CLI as default script to execute
 CMD ["meta_analysis_CLI.R"]
