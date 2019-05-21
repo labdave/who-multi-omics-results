@@ -1,6 +1,18 @@
-
-
-
+#!/usr/bin/Rscript                                                                                                                                    
+                                                                                                                                                      
+# Script Name: meta_analysis_CLI.R                                                                                                          
+#                                                                                                                                                     
+# Author: DaveLab Bioinformatics Team                                                                                                                 
+#                                                                                                                                                     
+# Created on: 05/21/2019                                                                                                                              
+#                                                                                                                                                     
+# Description: TBD                                    
+#                                                                                                                                                     
+# Syntax: Rscript --vanilla meta_analysis_CLI.R <TBD>
+#                                                                                                                                                     
+# Usage: Rscript --vanilla meta_analysis_CLI.R <TBD>
+                                                                                                                                                      
+# load require library
 library("survival")
 library("ggplot2")
 library("jsonlite")
