@@ -6,9 +6,9 @@
 #                                                                                                                                                     
 # Created on: 05/21/2019                                                                                                                              
 #                                                                                                                                                     
-# Description: TBD                                    
+# Description: Analysis of vcf and expr count matrices to produce results for variant filtering, expression normalization, cell of origin calls, genetic subgroups, survival analysis, translocations,  etc.                                    
 #                                                                                                                                                     
-# Syntax: Rscript --vanilla meta_analysis_CLI.R <TBD>
+# Syntax: Rscript --vanilla meta_analysis_CLI.R --exprfile <raw_count_matrix> --mutfile <recoded_vcf_file> --sampleid <sample_id> --outputdir <outputdir/sample.id>
 #                                                                                                                                                     
 # Usage: Rscript --vanilla meta_analysis_CLI.R <TBD>
                                                                                                                                                       
@@ -24,9 +24,13 @@ options_list <- list(
   make_option(c("-e", "--exprfile"), dest = "expr_file", type = "character", help = "raw read count file from STAR", default = F),
   make_option(c("-m", "--mutfile"), dest = "mut_file", type = "character", help = "recoded annovar vcf", default = F),
   make_option(c("-s", "--sampleid"), dest = "sample_id", type = "character", help = "a sample name/id"),
-  make_option(c("-r", "--refexpr"), dest = "ref_expr", type = "character", help = "a reference R object with 1kdlbcl expr data", default = F),
-  make_option(c("-g", "--refcellmodel"), dest = "ref_cell_model", type = "character", help = "a reference R object with the genomic risk model from Cell", default = F),
-  make_option(c("-o", "--outputdir"), dest = "out_dir", type = "character", help = "output dir name")
+  make_option(c("-o", "--outputdir"), dest = "out_dir", type = "character", help = "output dir name"),
+  make_option("--recodemutlevel", dest = "recode_mut_level", type = "character", help = "threshold used for recoded AC for calling mutation", default = 0.3),
+  make_option("--recodewtlevel", dest = "recode_wt_level", type = "character", help = "threshold used for recoded AC for calling WT", default = -0.4),
+  make_option("--mycexprthreshold", dest = "myc_expr_threshold", type = "character", help = "threshold used for defining high-MYC expression", default = 0.5), 
+  make_option("--bcl2exprthreshold", dest = "bcl2_expr_threshold", type = "character", help = "threshold used for defining high-BCL2 expression", default = 0.5), 
+  make_option(c("-r", "--refexpr"), dest = "ref_expr", type = "character", help = "a reference R object with 1kdlbcl expr data", default = "data/1kdlbcl_counts_fpkm_norm_1MB_gene_panel.RData"),
+  make_option(c("-g", "--refcellmodel"), dest = "ref_cell_model", type = "character", help = "a reference R object with the genomic risk model from Cell", default = "data/Genomic_risk_model_Ref_data.RData")
 )
 
 #parse the arguments
@@ -39,25 +43,17 @@ sample.id <- opt$sample_id
 variants.file=opt$mut_file
 tna.expr.file=opt$expr_file
 
-
-mut.flag=if(variants.file!=F) {TRUE} else {FALSE}
-expr.flag=T
-cnv.flag=F
-translocation.flag=F
-survival.flag=mut.flag & expr.flag
-
-recode.mut.level=0.3
-recode.wt.level=(-0.4)
+recode.mut.level=opt$recode_mut_level
+recode.wt.level=(opt$recode_wt_level)
 
 ref.expr.rdata.file=opt$ref_expr
 ref.genomic.risk.model.file=opt$ref_cell_model
-myc.cutoff=0.5
-bcl2.cutoff=0.5
+
+myc.cutoff=opt$myc_expr_threshold
+bcl2.cutoff=opt$bcl2_expr_threshold
 
 ##################
-
-result.dir <- opt$out_dir
-output.prefix=paste0(result.dir,"/",sample.id)
+output.prefix <- opt$out_dir
 
 
 ################## Run filtering variants script
