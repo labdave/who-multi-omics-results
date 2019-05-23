@@ -17,6 +17,7 @@ library("survival")
 library("ggplot2")
 library("jsonlite")
 library("optparse")
+library("here")
 
 
 #make a list of arguments
@@ -58,21 +59,21 @@ output.prefix <- opt$out_dir
 
 ################## Run filtering variants script
 if (variants.file!=F) {
-  source("variant_filtering.R")
+  source(here("who-multi-omics-results","variant_filtering.R"))
 }
 
 
 
 ##########Run expression analysis script
 if (tna.expr.file!=F) {
-  source("abc_gcb_classifier.R")
+  source(here("who-multi-omics-results","abc_gcb_classifier.R"))
 }
 
 
 
 ###########Run genomic risk model (Cell paper) & survival analysis 
 if (variants.file!=F & tna.expr.file!=F) {
-  source("survival_analysis_Cell_paper.R")
+  source(here("who-multi-omics-results","survival_analysis_Cell_paper.R"))
 }
 
 
