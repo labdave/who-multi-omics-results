@@ -17,7 +17,7 @@ RUN apt-get update -y &&\
     apt-get install git -y
 
 # install required dependencies for QCParser
-RUN R --vanilla -e 'install.packages(c("optparse", "ggplot2", "jsonlite", "survival"), repos="http://cran.us.r-project.org")'
+RUN R --vanilla -e 'install.packages(c("optparse", "ggplot2", "jsonlite", "survival", "here"), repos="http://cran.us.r-project.org")'
 
 # clone who-multi-omics-results repo
 RUN git clone https://github.com/labdave/who-multi-omics-results.git
