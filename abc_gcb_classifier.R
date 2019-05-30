@@ -52,8 +52,8 @@ pdf(paste0(output.prefix,"_COO_genes.pdf"),width=6,height=6)
 dev.off()
 
 
-write.table(tna.expr.subset[,c("gene","fpkm.log.z","subtype")], paste0(output.prefix,"_expr_subset.txt"),sep="\t", col.names=NA, row.names=T)
-write_json(tna.expr.subset[,c("gene","fpkm.log.z","subtype")], paste0(output.prefix,"_expr_subset_COO.json"))
+write.table(tna.expr.subset[,c("genes","fpkm.log.z","subtype")], paste0(output.prefix,"_expr_subset.txt"),sep="\t", col.names=NA, row.names=T)
+write_json(tna.expr.subset[,c("genes","fpkm.log.z","subtype")], paste0(output.prefix,"_expr_subset_COO.json"))
 write_json(data.frame("ABC_score"=abc.score,"GCB_score"=gcb.score, "Cell_of_origin_classification"=dlbcl.subtype), paste0(output.prefix,"_COO_classification.json"))
 
 ########################
