@@ -41,8 +41,8 @@ opt <- parse_args(opt_parser)
 
 ############## Input
 sample.id <- opt$sample_id
-variants.file=opt$mut_file
-tna.expr.file=opt$expr_file
+variants.file=gsub(pattern = "//", replacement = "/", x = opt$mut_file)
+tna.expr.file=gsub(pattern = "//", replacement = "/", x = opt$expr_file)
 
 recode.mut.level=opt$recode_mut_level
 recode.wt.level=(opt$recode_wt_level)
