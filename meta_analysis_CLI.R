@@ -30,8 +30,8 @@ options_list <- list(
   make_option("--recodewtlevel", dest = "recode_wt_level", type = "character", help = "threshold used for recoded AC for calling WT", default = -0.4),
   make_option("--mycexprthreshold", dest = "myc_expr_threshold", type = "character", help = "threshold used for defining high-MYC expression", default = 0.5), 
   make_option("--bcl2exprthreshold", dest = "bcl2_expr_threshold", type = "character", help = "threshold used for defining high-BCL2 expression", default = 0.5), 
-  make_option(c("-r", "--refexpr"), dest = "ref_expr", type = "character", help = "a reference R object with 1kdlbcl expr data", default = here("who-multi-omics-results","data/1kdlbcl_counts_fpkm_norm_1MB_gene_panel.RData")),
-  make_option(c("-g", "--refcellmodel"), dest = "ref_cell_model", type = "character", help = "a reference R object with the genomic risk model from Cell", default = here("who-multi-omics-results","data/Genomic_risk_model_Ref_data.RData"))
+  make_option(c("-r", "--refexpr"), dest = "ref_expr", type = "character", help = "a reference R object with 1kdlbcl expr data", default = here("who-multi-omics-results","data/1kdlbcl_counts_fpkm_norm_1MB_gene_panel.Rdata")),
+  make_option(c("-g", "--refcellmodel"), dest = "ref_cell_model", type = "character", help = "a reference R object with the genomic risk model from Cell", default = here("who-multi-omics-results","data/Genomic_risk_model_Ref_data.Rdata"))
 )
 
 #parse the arguments
@@ -41,14 +41,14 @@ opt <- parse_args(opt_parser)
 
 ############## Input
 sample.id <- opt$sample_id
-variants.file=gsub(pattern = "//", replacement = "/", x = opt$mut_file)
-tna.expr.file=gsub(pattern = "//", replacement = "/", x = opt$expr_file)
+variants.file=opt$mut_file
+tna.expr.file=opt$expr_file
 
 recode.mut.level=opt$recode_mut_level
 recode.wt.level=(opt$recode_wt_level)
 
-ref.expr.rdata.file=opt$ref_expr
-ref.genomic.risk.model.file=opt$ref_cell_model
+ref.expr.rdata.file=gsub(pattern = "//", replacement = "/", x = opt$ref_expr)
+ref.genomic.risk.model.file=gsub(pattern = "//", replacement = "/", x = opt$ref_cell_model)
 
 myc.cutoff=opt$myc_expr_threshold
 bcl2.cutoff=opt$bcl2_expr_threshold
