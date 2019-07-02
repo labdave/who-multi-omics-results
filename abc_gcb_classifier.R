@@ -14,7 +14,7 @@ tna.expr <- tna.expr[rownames(ref.1kdbcl),]
 
 
 ##################Compute FPKM
-library.size <- sum(tna.expr[,3])
+library.size <- sum(tna.expr[,3], na.rm = TRUE)
 
 tna.expr$fpkm <- (tna.expr[,3]/library.size)*10^6
 tna.expr$fpkm <- (tna.expr$fpkm/ref.1kdbcl.annot$gene.length)*10^3
@@ -29,8 +29,8 @@ tna.expr$fpkm.log.z <- (tna.expr$fpkm.log - mean.sd.1kdlbcl[,"mean"])/mean.sd.1k
 tna.expr[rownames(subtype.genes),] -> tna.expr.subset
 
 #################Signature scores
-abc.score <- mean(tna.expr.subset$fpkm.log.z[subtype.genes[,"subtype"]=="ABC"])
-gcb.score <- mean(tna.expr.subset$fpkm.log.z[subtype.genes[,"subtype"]=="GCB"])
+abc.score <- mean(tna.expr.subset$fpkm.log.z[subtype.genes[,"subtype"]=="ABC"], na.rm = TRUE)
+gcb.score <- mean(tna.expr.subset$fpkm.log.z[subtype.genes[,"subtype"]=="GCB"], na.rm = TRUE)
 sig.score <- abc.score - gcb.score
 
 cbind(tna.expr.subset,"subtype"=factor(subtype.genes[,"subtype"],levels=c("GCB","ABC")),"genes"=subtype.genes[,"gene_name"]) -> tna.expr.subset
